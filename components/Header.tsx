@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <header className="absolute top-0 left-0 w-full z-50 bg-transparent flex items-center justify-between px-8 py-4">
-      <Link href={`/?id=${language}`} className="select-none">
+      <Link href={`/?lang=${language}`} className="select-none">
         <span className="text-3xl font-extrabold text-red-600 tracking-widest">
           MALIX
         </span>

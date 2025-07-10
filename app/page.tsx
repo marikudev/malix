@@ -22,11 +22,11 @@ import Pagination from "@/components/Pagination";
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: { id?: string; page?: string; q?: string };
+  searchParams: { lang?: string; page?: string; q?: string };
 }) {
-  const params = await searchParams; // Ambil query params dari URL
-  const language = params?.id || "id-ID"; // Ambil bahasa dari query params, default ke "id-ID"
-  const page = Number(params?.page) || 1; // Ambil halaman dari query params, default ke // Total halaman, bisa diambil dari response API jika perlu
+  // Tidak perlu await searchParams, karena ini object
+  const language = searchParams?.lang || "id-ID";
+  const page = Number(searchParams?.page) || 1; // Ambil halaman dari query params, default ke // Total halaman, bisa diambil dari response API jika perlu
 
   let movies: Movie[] = []; // Inisialisasi daftar film
   let error: string | null = null; // Untuk pesan error
@@ -81,7 +81,7 @@ export default async function HomePage({
             <p className="text-white/90 text-base sm:text-lg line-clamp-3 mb-6 drop-shadow">
               {heroMovie.overview}
             </p>
-            <Link href={`/movie/${heroMovie.id}?id=${language}`}>
+            <Link href={`/movie/${heroMovie.id}?lang=${language}`}>
               <button className="bg-transparent border border-white hover:border-red- hover:text-red-500 text-white font-normal py-2 px-6 rounded-lg text-lg shadow-lg transition-all">
                 More Info
               </button>
@@ -112,7 +112,7 @@ export default async function HomePage({
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 mx-auto pl-8">
           {movies.map((movie) => (
             <Link
-              href={`/movie/${movie.id}?id=${language}`}
+              href={`/movie/${movie.id}?lang=${language}`}
               key={movie.id}
               passHref
             >
