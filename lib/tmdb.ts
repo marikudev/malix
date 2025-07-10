@@ -33,10 +33,7 @@ export interface Movie {
   // Fungsi asinkron untuk mengambil daftar film populer
   export async function getPopularMovies(language: string, page: number): Promise<PaginatedMoviesResponse> {
     // Periksa apakah API key telah dikonfigurasi
-    if (!TMDB_API_KEY) {
-      console.error("Kesalahan: Variabel lingkungan TMDB_API_KEY tidak dikonfigurasi.");
-      throw new Error("TMDB_API_KEY tidak dikonfigurasi. Harap tambahkan di file .env.local.");
-    }
+   
 
     // Melakukan fetch ke endpoint film populer
     const res = await fetch(`${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&language=${language}&page=${page}`, {
