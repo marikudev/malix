@@ -9,14 +9,6 @@ import {
 import { Button } from "@/components/ui/button"; // Mengimpor komponen Button shadcn/ui
 import { AspectRatio } from "@radix-ui/react-aspect-ratio"; // Helper untuk aspek rasio gambar
 
-// Definisi props untuk halaman detail film.
-// `params` akan berisi parameter dinamis dari URL, dalam hal ini `id` film.
-interface MovieDetailsPageProps {
-  params: {
-    id: string; // ID film dari URL, misalnya /movie/123 -> id = "123"
-  };
-}
-
 // Tambahkan tipe untuk hasil video TMDb
 interface MovieVideo {
   id: string;
@@ -30,9 +22,14 @@ interface MovieVideo {
 export default async function MovieDetailsPage({
   params,
   searchParams,
-}: MovieDetailsPageProps & { searchParams?: { id?: string } }) {
+}: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const { id } = params;
-  const language = searchParams?.id || "id-ID";
+  // Ambil language dari searchParams, default ke "id-ID"
+  const language =
+    typeof searchParams?.lang === "string" ? searchParams.lang : "id-ID";
   let movie;
   let videos: { results: MovieVideo[] } | undefined;
   let error: string | null = null;
@@ -189,7 +186,7 @@ export default async function MovieDetailsPage({
           )}
         </div>
         {/* Tombol kembali */}
-        <Link href={`/?id=${language}`} passHref className="self-center mt-8">
+        <Link href={`/?lang=${language}`} passHref className="self-center mt-8">
           <Button
             variant="ghost"
             className="mt-6 hover:bg-transparent hover:text-red-800 hover:border-red-800 transition-colors duration-200 text-lg text-red-500 border border-red-500 px-6 py-3 rounded-lg"
